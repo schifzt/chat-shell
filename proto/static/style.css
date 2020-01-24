@@ -1,0 +1,35 @@
+input[type='text']{
+    font-size: large;
+    text-align: left;
+
+    min-width: 400px !important;
+    max-width: 99.99%!important;
+    transition: width 0s;
+    padding: 10px;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+    outline: none;
+    appearance: none;
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+
+button#myBtn {
+    font-size: large;
+    background:#298CF2;
+    padding: 8px 15px 8px 15px;
+	border: none;
+    color: #fff;
+    outline: none;
+}
+
+h4#myOutput{
+    /* text-indent: 200px each-line; */
+}

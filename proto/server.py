@@ -7,13 +7,15 @@ import os
 import sys
 import signal
 import logging
+from run_bash_command_in_python import run_command
 
 cl = []
 is_closing = False
 
+
 def signal_handler(signum, frame):
     global is_closing
-    logging.info("exiting...")
+    logging.info("Exiting...")
     is_closing = True
 
 
@@ -21,7 +23,7 @@ def try_exit():
     global is_closing
     if (is_closing):
         tornado.ioloop.IOLoop.instance().stop()
-        logging.info("exit success")
+        logging.info("Exit success")
 
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
@@ -30,9 +32,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             cl.append(self)
 
     def on_message(self, message):
-        for client in cl:
-            client.write_message(message)
-            print(message)
+        print("client --> server: %s" % message)
+        if not "sudo" in message:
+            out = run_command(message)
+
+            if not out == "":
+                for client in cl:
+                    client.write_message(out)
 
     def on_close(self):
         if self in cl:
@@ -41,7 +47,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        '''Respond to GET request from client.
+        '''
+        self.render(
+            "index.html", message="Response to GET request from client.")
 
 
 BASE_DIR = os.path.dirname(__file__)

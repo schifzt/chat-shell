@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf8">
+    <title>Websocket Test</title>
+    <link rel="stylesheet" href="{{ static_url("style.css") }}" />
+</head>
+<body>
+    <h3>server --> client: "{{ message }}"</h3>
+
+
+    <div class="input-wrap">
+        <input autofocus type="text" id="myInput" autocomplete="off" placeholder="ls -l">
+        <button id="myBtn" onclick="sendCommand()">Run</button>
+    </div>
+
+    <h4 id="myOutput" readonly></h4>
+
+	<script src="{{ static_url("main.js") }}"></script>
+	<script src="{{ static_url("dynamic_width.js") }}"></script>
+</body>
+</html>
