@@ -1,5 +1,12 @@
+html {
+	font-size: 62.5%;
+}
+body {
+	font-size: 1.6em;
+}
+
 input[type='text']{
-    font-size: large;
+    font-size: 2rem;
     text-align: left;
 
     min-width: 400px !important;
@@ -22,7 +29,7 @@ input[type='text']{
 
 
 button#myBtn {
-    font-size: large;
+    font-size: 2rem;
     background:#298CF2;
     padding: 8px 15px 8px 15px;
 	border: none;
@@ -30,6 +37,20 @@ button#myBtn {
     outline: none;
 }
 
-h4#myOutput{
-    /* text-indent: 200px each-line; */
+div#myOutput{
+    font-size: 1.5rem;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+div#myOutput > span.tab, span.space{
+    visibility: hidden;
+}
+
+div#myOutput > span.highlight{
+    font-weight: bold;
+}
+div#myOutput > span.underline{
+    /* text-decoration: underline; */
+    border-bottom: solid 2px #000000;
 }

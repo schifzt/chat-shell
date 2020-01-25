@@ -37,6 +37,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             out = run_command(message)
 
             if not out == "":
+                print(out.decode("utf-8"))
                 for client in cl:
                     client.write_message(out)
 

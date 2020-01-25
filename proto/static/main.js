@@ -6,8 +6,9 @@ function initWebSocket() {
   };
 
   ws.onmessage = function(e) {
-    var output = document.getElementById("myOutput");
-    output.innerText = e.data;
+    var elm = document.getElementById("myOutput");
+    console.log(e.data);
+    elm.innerHTML = col_b(e.data);
   };
 }
 
