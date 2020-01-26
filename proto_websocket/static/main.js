@@ -7,7 +7,6 @@ function initWebSocket() {
 
   ws.onmessage = function(e) {
     var elm = document.getElementById("myOutput");
-    // console.log(e.data);
     console.log(countLinebreak(e.data));
     elm.innerHTML = col_b(e.data);
   };
@@ -22,11 +21,19 @@ sendCommand = function() {
   ws.send(cmd);
 }
 
+sendIncompleteWord = function() {
+  var chr = document.getElementById("myInput").value;
+  ws.send("___"+chr);
+}
+
 /* "Enter" calls sendCommand() function. */
 var input = document.getElementById("myInput");
 input.addEventListener("keyup", function(event) {
+  event.preventDefault();
   if (event.keyCode === 13) {
-	  event.preventDefault();
-	  document.getElementById("myBtn").click();
+    sendCommand();
+  }
+  else{
+    sendIncompleteWord();
   }
 });

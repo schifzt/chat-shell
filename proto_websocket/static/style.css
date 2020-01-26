@@ -38,9 +38,10 @@ button#myBtn {
 }
 
 div#myOutput{
+    font-family: "Courier New", Courier, monospace;
     font-size: 1.5rem;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 
 div#myOutput > span.tab, span.space{

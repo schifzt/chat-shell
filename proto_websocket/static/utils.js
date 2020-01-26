@@ -12,7 +12,7 @@ function col_b(text){
     return(
         text.replace(/\n/g, "<br>")
         .replace(/ /g, "<span class=\"space\">s</span>")
-        .replace(/\t/g, "<span class=\"tab\">4tab</span>")
+        .replace(/\t/g, "<span class=\"tab\">ssss</span>")
         .replace(/(.)[\b]\1/g, "<span class=\"highlight\">$1</span>")
         .replace(/_[\b](.)/g, "<span class=\"underline\">$1</span>")
     );
