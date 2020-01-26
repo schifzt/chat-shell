@@ -7,7 +7,8 @@ function initWebSocket() {
 
   ws.onmessage = function(e) {
     var elm = document.getElementById("myOutput");
-    console.log(e.data);
+    // console.log(e.data);
+    console.log(countLinebreak(e.data));
     elm.innerHTML = col_b(e.data);
   };
 }
@@ -21,7 +22,7 @@ sendCommand = function() {
   ws.send(cmd);
 }
 
-// Press "Enter" call sendCommand() function.
+/* "Enter" calls sendCommand() function. */
 var input = document.getElementById("myInput");
 input.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {

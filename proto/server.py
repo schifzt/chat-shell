@@ -7,11 +7,13 @@ import os
 import sys
 import signal
 import logging
+import subprocess
 from run_bash_command_in_python import run_command
 
 cl = []
 is_closing = False
-
+timeout = 1
+prohibited_cmd = ["sudo", "rm", "dev"]
 
 def signal_handler(signum, frame):
     global is_closing
@@ -23,7 +25,7 @@ def try_exit():
     global is_closing
     if (is_closing):
         tornado.ioloop.IOLoop.instance().stop()
-        logging.info("Exit success")
+        logging.info("Exit success.")
 
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
@@ -32,14 +34,20 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             cl.append(self)
 
     def on_message(self, message):
-        print("client --> server: %s" % message)
-        if not "sudo" in message:
-            out = run_command(message)
+        print("client --> server: \'%s\'" % message)
 
-            if not out == "":
-                print(out.decode("utf-8"))
-                for client in cl:
-                    client.write_message(out)
+        if not any(cmd in message for cmd in prohibited_cmd):
+            cmd = message
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, 
+                                        stderr=subprocess.STDOUT, shell=True)
+            try:
+                out = p.communicate(timeout=timeout)[0]
+            except subprocess.TimeoutExpired as e:
+                out = "Command \'{}\' timed out after {} seconds.\n".format(e.cmd, e.timeout).encode()
+
+            for client in cl:
+                client.write_message(out)
+
 
     def on_close(self):
         if self in cl:

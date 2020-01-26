@@ -3,39 +3,45 @@ import subprocess
 import shlex
 import signal
 
-# signal.SIGINT
+
+# def run_command(cmd):
+#     try:
+#         p = subprocess.run(cmd, stdout=subprocess.PIPE, 
+#                             stderr=subprocess.STDOUT, check=True, shell=True, timeout=3)
+#     except subprocess.CalledProcessError as e:
+#         return e.stdout
+#     except subprocess.TimeoutExpired as e:
+#         return b"time out"
+#     else:
+#         return p.stdout
+
+
+def send_SIGINT(signum, frame):
+    print("\nrun_commnad: SIGINT detected.")
+    p.send_signal(signal.SIGINT)
 
 def run_command(cmd):
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT, shell=True)
+    # # Register send_SIGINT to signal handler
+    # signal.signal(signal.SIGINT, send_SIGINT)
     try:
-        ps = subprocess.run(cmd, stdout=subprocess.PIPE, 
-                            stderr=subprocess.STDOUT, check=True, shell=True)
+        out = p.communicate(timeout=3)[0]
     except subprocess.CalledProcessError as e:
         return e.stdout
+    except subprocess.TimeoutExpired as e:
+        return b"time out"
     else:
-        return ps.stdout
-
-
-def run_command_test(cmd):
-    try:
-        ps = subprocess.run(cmd, stdout=subprocess.PIPE, 
-                            stderr=subprocess.STDOUT, check=True, shell=True)
-    except subprocess.CalledProcessError as e:
-        return e.stdout.decode("utf-8")
-    else:
-        return ps.stdout.decode("utf-8")
-
+        return out
 
 
 if __name__ == "__main__":
     # cmd = "ls -l | grep md$"
-    cmd = "cat test.py"
-    # cmd = input()
+    # cmd = "cat test.py"
 
-    # cmd = shlex.quote(cmd)
-    # cmd = shlex.split(cmd)
-    # cmd = shlex.split(cmd[-1])
+    p1 = subprocess.Popen("cat test.py", stdin=subprocess.PIPE, stdout = subprocess.PIPE, shell=True)
+    out1 = p1.communicate(input=b"aaa")[0]
+    print(out1.decode("utf-8"))
 
-    out = run_command_test(cmd)
-    print(out)
-
+    
 
