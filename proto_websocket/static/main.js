@@ -6,9 +6,17 @@ function initWebSocket() {
   };
 
   ws.onmessage = function(e) {
-    var elm = document.getElementById("myOutput");
-    console.log(countLinebreak(e.data));
-    elm.innerHTML = col_b(e.data);
+    message = e.data;
+    console.log(countLinebreak(message));
+
+    if(message.slice(0,3) === "___"){
+      // message is a completion list
+      console.log(message);
+    }else{
+      // message is a result of input command
+      var elm = document.getElementById("myOutput");
+      elm.innerHTML = col_b(message);
+    }
   };
 }
 
@@ -22,15 +30,14 @@ sendCommand = function() {
 }
 
 sendIncompleteWord = function() {
-  var chr = document.getElementById("myInput").value;
-  ws.send("___"+chr);
+  var incomplete_word = document.getElementById("myInput").value;
+  ws.send("___" + incomplete_word);
 }
 
-/* "Enter" calls sendCommand() function. */
-var input = document.getElementById("myInput");
+const ENTER = 13;
 input.addEventListener("keyup", function(event) {
   event.preventDefault();
-  if (event.keyCode === 13) {
+  if (event.keyCode === ENTER) {
     sendCommand();
   }
   else{

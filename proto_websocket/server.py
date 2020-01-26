@@ -14,7 +14,7 @@ from tab_completion import complete_command
 cl = []
 is_closing = False
 timeout = 1
-prohibited_cmds = ["sudo", "rm", "dev"]
+prohibited_commands = ["sudo", "rm"]
 
 
 def signal_handler(signum, frame):
@@ -37,11 +37,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         print("client --> server: \'%s\'" % message)
+
         if message[:3] == "___":    
-            # message is incomplete word
-            out = complete_command(message[3:]) if not message[3:] == "" else b"\n"
-        elif not any(cmd in message for cmd in prohibited_cmds):
-            # message is complete command
+            # message is an incomplete word
+            out = b"___" + (complete_command(message[3:]) if not message[3:] == "" else b"\n")
+        elif any(cmd in message for cmd in prohibited_commands):
+            # message is a prohibited command
+            out = ("Command \'{}\' is prohibited.".format(message)).encode()
+        else:
+            # message is a complete command
             out = run_command(message, timeout)
 
         for client in cl:

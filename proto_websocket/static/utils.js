@@ -1,5 +1,5 @@
 function countLinebreak(text){
-    return(text.match(/\n/g).length);
+    return((text.match(/\n/g) || []).length)
 }
 
 function foldLine(n_foldstart){
