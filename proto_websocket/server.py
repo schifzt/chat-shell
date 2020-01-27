@@ -40,7 +40,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
         if message[:3] == "___":    
             # message is an incomplete word
-            out = b"___" + (complete_command(message[3:]) if not message[3:] == "" else b"\n")
+            out = b"___" + (b"\n" if message[3:] == "" else complete_command(message[3:]))
         elif any(cmd in message for cmd in prohibited_commands):
             # message is a prohibited command
             out = ("Command \'{}\' is prohibited.".format(message)).encode()
@@ -60,11 +60,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        '''Server response to GET request from client.
-        '''
-        # self.render("index.html")
-        self.render(
-            "index.html", message="Response to GET request from client.")
+        self.render("index.html")
 
 
 BASE_DIR = os.path.dirname(__file__)
@@ -80,9 +76,6 @@ application = tornado.web.Application([
 
 
 if __name__ == "__main__":
-    # application.listen(8000)
-    # tornado.ioloop.IOLoop.current().start()
-
     tornado.options.parse_command_line()
     signal.signal(signal.SIGINT, signal_handler)
     application.listen(8000)

@@ -38,8 +38,9 @@ button#myBtn {
 }
 
 div#myOutput{
-    font-family: "Courier New", Courier, monospace;
-    font-size: 1.5rem;
+    /* font-family: "Courier New", Courier, monospace; */
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 1.8rem;
     padding-left: 20px;
     padding-top: 20px;
 }

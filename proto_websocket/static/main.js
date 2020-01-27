@@ -1,3 +1,6 @@
+const myInput = document.getElementById("myInput");
+const myOutput = document.getElementById("myOutput");
+
 function initWebSocket() {
   ws = new WebSocket("ws://localhost:8000/websocket");
 
@@ -6,16 +9,17 @@ function initWebSocket() {
   };
 
   ws.onmessage = function(e) {
-    message = e.data;
-    console.log(countLinebreak(message));
+    var message = e.data;
 
     if(message.slice(0,3) === "___"){
       // message is a completion list
-      console.log(message);
+      completions = message.slice(3, ).split("\n");
+      myOutput.innerHTML = completions;
+      // setAutocomplete(completions);
     }else{
       // message is a result of input command
-      var elm = document.getElementById("myOutput");
-      elm.innerHTML = col_b(message);
+      console.log(countLinebreak(message));
+      myOutput.innerHTML = col_b(message);
     }
   };
 }
@@ -25,17 +29,18 @@ window.onload = new function() {
 }
 
 sendCommand = function() {
-  var cmd = document.getElementById("myInput").value;
+  var cmd = myInput.value;
   ws.send(cmd);
 }
 
 sendIncompleteWord = function() {
-  var incomplete_word = document.getElementById("myInput").value;
+  var incomplete_word = myInput.value.split(" ").pop();
+  console.log(incomplete_word);
   ws.send("___" + incomplete_word);
 }
 
 const ENTER = 13;
-input.addEventListener("keyup", function(event) {
+myInput.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === ENTER) {
     sendCommand();
@@ -44,3 +49,4 @@ input.addEventListener("keyup", function(event) {
     sendIncompleteWord();
   }
 });
+

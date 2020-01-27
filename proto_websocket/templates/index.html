@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="utf8">
+    <meta charset="utf-8">
     <title>Websocket Test</title>
     <link rel="stylesheet" href="{{ static_url("style.css") }}" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ static_url("jquery-ui/jquery-ui.min.css") }}" />
+	<script src="{{ static_url("jquery-ui/jquery.js") }}"></script>
+	<script src="{{ static_url("jquery-ui/jquery-ui.min.js") }}"></script>
+    <script src="{{ static_url("autocomplete.js") }}"></script>
+
 </head>
 <body>
     <div class="input-wrap">
@@ -15,6 +22,6 @@
 
 	<script src="{{ static_url("main.js") }}"></script>
 	<script src="{{ static_url("utils.js") }}"></script>
-	<script src="{{ static_url("dynamic_width.js") }}"></script>
+    <script src="{{ static_url("dynamic_width.js") }}"></script>
 </body>
 </html>
