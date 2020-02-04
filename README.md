@@ -1,2 +1,2 @@
-Browser Shell
+chat shell
 ---
