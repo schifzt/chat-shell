@@ -13,7 +13,7 @@ from tab_completion import complete_command
 
 cl = []
 is_closing = False
-timeout = 1
+timeout = 2
 prohibited_commands = ["sudo", "rm"]
 
 
