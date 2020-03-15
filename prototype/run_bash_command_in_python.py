@@ -32,9 +32,12 @@ def run_command(cmd, timeout=1):
 
 if __name__ == "__main__":
     # cmd = "ls -l | grep md$"
-    # cmd = "ct test.py"
+    cmd = "ls | lolcat"
 
-    p1 = subprocess.Popen("cat test.py", stdin=subprocess.PIPE,
-                          stdout=subprocess.PIPE, shell=True)
-    out1 = p1.communicate(input=b"aaa")[0]
-    print(out1.decode("utf-8"))
+    p1 = subprocess.Popen(cmd, stdin=subprocess.PIPE,
+                          stdout=subprocess.PIPE, 
+                          shell=True)
+    out = p1.communicate()
+    print(out[0])
+    print(out[1])
+    print(out[0].decode("utf-8"))
